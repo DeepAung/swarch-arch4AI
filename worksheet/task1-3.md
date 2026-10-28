@@ -87,19 +87,21 @@ Copy result rows from `results/runs.csv` (or the load test's output) into the ta
 
 | Run | p50 ms | p95 ms | accuracy | large calls | cache hits |
 |---|---|---|---|---|---|
-| t3-cache | | | | | |
+| t3-cache | 17 | 507 | 93.0% | 38% | 35% |
 
 **Q3.1** Which reviews benefit from the cache, and which never will?
 
 *รีวิวแบบไหนได้ประโยชน์จาก cache และแบบไหนไม่มีวันได้ประโยชน์*
 
->
+> The reviews that are common with common words will get the benefit from the cache. E.g., "nice", "very nice", "Very Nice!!".
+> While the reviews that is unique or is a outliner won't get the cache hit.
 
 **Q3.2** Next week you deploy a better large model. What must happen to the cache, and how would you design for it?
 
 *สัปดาห์หน้าจะ deploy large model ตัวใหม่ที่ดีกว่าเดิม ต้องทำอะไรกับ cache และจะออกแบบรองรับเรื่องนี้อย่างไร*
 
->
+> Clear the cache. Because if new model is more accurate. The server might answer from cache which is wrong answer instead of using the newer model that might have answer correctly.
+> Or if the clean cache would suffer the large latency at the start. We can build the cache by sample data before deploy it.
 
 ## Debrief
 
@@ -107,4 +109,4 @@ Copy result rows from `results/runs.csv` (or the load test's output) into the ta
 
 *ยกตัวอย่างหนึ่งสิ่งที่ได้เรียนรู้จากการวัดผลครั้งนี้ ที่ไม่มีพูดถึงใน lecture*
 
->
+> There's many aspect in optimizing the response time and throughput. Some of them are orthogonal and can be done together like doing caching together with cascade and the timout.
