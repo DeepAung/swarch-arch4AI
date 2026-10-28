@@ -1,8 +1,8 @@
 # Tutorial 6 worksheet: serving patterns
 
-**Name / ชื่อ:**
+**Name / ชื่อ:** Ashira Aungsumal
 
-**Student ID / รหัสนิสิต:**
+**Student ID / รหัสนิสิต:** 6732041921
 
 This is **individual work**: each student completes and submits their own copy, in their own fork.
 
@@ -16,14 +16,14 @@ Copy result rows from `results/runs.csv` (or the load test's output) into the ta
 
 | Run | p50 ms | p95 ms | accuracy | large calls |
 |---|---|---|---|---|
-| t0-large | | | | |
-| t0-small | | | | |
+| t0-large | 511 | 603 | 93.5% | 100% |
+| t0-small | 42 | 80 | 72.5% | 0% |
 
 **Q0.** What does the large model buy, and what does it cost?
 
 *large model ให้อะไรเพิ่ม และต้องแลกด้วยอะไร*
 
->
+> It has more accuracy (+21%), but also has higher latency (around 12 times in p50)
 
 ## Task 1: Fallback prediction (copy the Task 1 results from `results/runs.csv` here / copy ผลลัพธ์ของ Task 1 จาก `results/runs.csv` มาวางที่นี่)
 
