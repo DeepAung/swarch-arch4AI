@@ -29,8 +29,8 @@ Copy result rows from `results/runs.csv` (or the load test's output) into the ta
 
 | Run | run time (s) | p50 ms | p95 ms | errors | pending | accuracy |
 |---|---|---|---|---|---|---|
-| t1-before | 33.2 | 226 | 483 | 22 | 0 | 93.3 |
-| t1-after | 9.3 | 401 | 1013 | 0 | 26 | 92.5 |
+| t1-before | 33.2 | 226 | 483 | 22 | 0 | 93.3% |
+| t1-after | 9.3 | 401 | 1013 | 0 | 26 | 92.5% |
 
 **Q1.1** In `t1-before`, p50 can look *better* than the baseline. Why is p50 misleading here? Which column tells the real story?
 
