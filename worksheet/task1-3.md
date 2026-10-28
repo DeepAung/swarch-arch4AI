@@ -29,32 +29,32 @@ Copy result rows from `results/runs.csv` (or the load test's output) into the ta
 
 | Run | run time (s) | p50 ms | p95 ms | errors | pending | accuracy |
 |---|---|---|---|---|---|---|
-| t1-before | | | | | | |
-| t1-after | | | | | | |
+| t1-before | 33.2 | 226 | 483 | 22 | 0 | 93.3 |
+| t1-after | 9.3 | 401 | 1013 | 0 | 26 | 92.5 |
 
 **Q1.1** In `t1-before`, p50 can look *better* than the baseline. Why is p50 misleading here? Which column tells the real story?
 
 *ใน `t1-before` ค่า p50 อาจดู "ดีกว่า" baseline ทำไม p50 จึงทำให้เข้าใจผิดในกรณีนี้ และ column ไหนบอกความจริง*
 
->
+> Because p50 and p95 records only the success calls. The calls that get hanged would be ignored (failed at client side). And since there's fewer calls that success, the model actually performs better because lower throughput. The run time tells us a real story.
 
 **Q1.2** The hang affects only 10% of large-model calls. Why is it worse for the system than 10% of reviews being slow? Think about what a waiting request holds on to in the review service and the gateway.
 
 *การค้างเกิดกับ calls ไปยัง large model แค่ 10% ทำไมจึงส่งผลต่อระบบแย่กว่าการที่รีวิว 10% ช้าลงเฉยๆ ลองคิดว่า request ที่รออยู่ถือทรัพยากรอะไรไว้ใน review service และ gateway*
 
->
+> Because hanged request doesn't equal no request. It actually requests to the server, so it allocates some of the resouce. E.g., work in the Gateway.
 
 **Q1.3** Pending reviews have no label. Suggest what should happen to them, and name the topology from the lecture that does it.
 
 *รีวิวที่ pending ยังไม่มี label ควรจัดการกับรีวิวเหล่านี้อย่างไร และ topology ใดจาก lecture ที่ทำแบบนั้น*
 
->
+> Right now the request that timeouts would never get the answer. We can save it as pending, and later do a bulk job labels with the large model. The topology is "Batch processing".
 
 **Q1.4** We chose a 1-second timeout. What goes wrong if it is 0.1 s? And if it is 10 s?
 
 *เราเลือก timeout 1 วินาที จะเกิดปัญหาอะไรถ้าตั้งเป็น 0.1 วินาที และถ้าตั้งเป็น 10 วินาที*
 
->
+> 0.1 is much lower than the average latency. So it will almost always timeout and becomes pending with no label, while the large model still does the work and its answers are thrown away. And 10 seconds is too large, it's much more than the average latency, so the timeout almost never happen. So the timeout is useless.
 
 ## Task 2: Cascade (copy the Task 2 results from `results/runs.csv` here / copy ผลลัพธ์ของ Task 2 จาก `results/runs.csv` มาวางที่นี่)
 
